@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,7 +35,7 @@
             background-color: var(--bg-color);
             color: var(--text-primary);
             min-height: 100vh;
-            background-image: 
+            background-image:
                 radial-gradient(circle at 15% 50%, rgba(88, 166, 255, 0.05), transparent 25%),
                 radial-gradient(circle at 85% 30%, rgba(188, 140, 255, 0.05), transparent 25%);
             background-attachment: fixed;
@@ -87,7 +88,8 @@
             transition: all 0.3s ease;
         }
 
-        select:hover, select:focus {
+        select:hover,
+        select:focus {
             border-color: var(--accent-primary);
             box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.2);
         }
@@ -170,12 +172,23 @@
         .kpi-card::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; width: 4px; height: 100%;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
         }
 
-        .kpi-card.pedido::before { background: var(--gradient-1); }
-        .kpi-card.meta::before { background: var(--gradient-2); }
-        .kpi-card.media::before { background: var(--gradient-3); }
+        .kpi-card.pedido::before {
+            background: var(--gradient-1);
+        }
+
+        .kpi-card.meta::before {
+            background: var(--gradient-2);
+        }
+
+        .kpi-card.media::before {
+            background: var(--gradient-3);
+        }
 
         .kpi-title {
             font-size: 0.9rem;
@@ -208,7 +221,7 @@
             background: rgba(88, 166, 255, 0.1);
             color: var(--accent-primary);
         }
-        
+
         .badge.success {
             background: rgba(63, 185, 80, 0.1);
             color: #3fb950;
@@ -243,6 +256,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <header>
@@ -308,22 +322,22 @@
     <script>
         // Mock Data based on base_dados.py and meta.py
         let database = [
-            {"produto": "Gasolina", "regiao": "Norte", "valor": 5000},
-            {"produto": "Gasolina Aditivada", "regiao": "Norte", "valor": 3000},
-            {"produto": "Etanol", "regiao": "Norte", "valor": 4500},
-            {"produto": "Etanol Aditivado", "regiao": "Norte", "valor": 2000},
-            {"produto": "S10", "regiao": "Norte", "valor": 8000},
-            {"produto": "S10 Aditivado", "regiao": "Norte", "valor": 1500},
-            {"produto": "S500", "regiao": "Norte", "valor": 6000},
-            {"produto": "S500 Aditivado", "regiao": "Norte", "valor": 1000},
-            {"produto": "Gasolina", "regiao": "Sul", "valor": 12000},
-            {"produto": "Gasolina Aditivada", "regiao": "Sul", "valor": 4000},
-            {"produto": "Etanol", "regiao": "Sul", "valor": 5000},
-            {"produto": "Etanol Aditivado", "regiao": "Sul", "valor": 2500},
-            {"produto": "S10", "regiao": "Sul", "valor": 10000},
-            {"produto": "S10 Aditivado", "regiao": "Sul", "valor": 2000},
-            {"produto": "S500", "regiao": "Sul", "valor": 8000},
-            {"produto": "S500 Aditivado", "regiao": "Sul", "valor": 1500},
+            { "produto": "Gasolina", "regiao": "Norte", "valor": 5000 },
+            { "produto": "Gasolina Aditivada", "regiao": "Norte", "valor": 3000 },
+            { "produto": "Etanol", "regiao": "Norte", "valor": 4500 },
+            { "produto": "Etanol Aditivado", "regiao": "Norte", "valor": 2000 },
+            { "produto": "S10", "regiao": "Norte", "valor": 8000 },
+            { "produto": "S10 Aditivado", "regiao": "Norte", "valor": 1500 },
+            { "produto": "S500", "regiao": "Norte", "valor": 6000 },
+            { "produto": "S500 Aditivado", "regiao": "Norte", "valor": 1000 },
+            { "produto": "Gasolina", "regiao": "Sul", "valor": 12000 },
+            { "produto": "Gasolina Aditivada", "regiao": "Sul", "valor": 4000 },
+            { "produto": "Etanol", "regiao": "Sul", "valor": 5000 },
+            { "produto": "Etanol Aditivado", "regiao": "Sul", "valor": 2500 },
+            { "produto": "S10", "regiao": "Sul", "valor": 10000 },
+            { "produto": "S10 Aditivado", "regiao": "Sul", "valor": 2000 },
+            { "produto": "S500", "regiao": "Sul", "valor": 8000 },
+            { "produto": "S500 Aditivado", "regiao": "Sul", "valor": 1500 },
         ];
 
         let goals = {
@@ -343,10 +357,10 @@
 
         function updateDashboard() {
             const selectedRegion = document.getElementById('regiaoSelect').value;
-            
+
             // Filter Data
             const filteredData = database.filter(item => selectedRegion === 'Todas' || item.regiao === selectedRegion);
-            
+
             // Aggregate values by product
             const productSales = {};
             let totalPedido = 0;
@@ -360,24 +374,24 @@
             });
 
             const currentMeta = goals[selectedRegion];
-            
+
             // Calculate averages and percentages
             const numOrders = filteredData.length || 1;
             const avgPedido = totalPedido / numOrders;
-            
+
             // Formula requested: "% da media dos pedidos + a meta"
             // Usually this means comparing the total sales to the goal, and also showing average
             // Total Orders percentage relative to Goal
             const percentualProgresso = currentMeta > 0 ? (totalPedido / currentMeta) * 100 : 0;
             const porcentagemIndice = currentMeta > 0 ? ((avgPedido + currentMeta) / currentMeta) * 100 : 0; // Literal interpretation of text if needed, but let's show actual progress
-            
+
             // Update KPIs
             document.getElementById('kpiPedido').innerText = formatBRL(totalPedido);
             document.getElementById('kpiAvgPedidos').innerText = `Média/Pedido: ${formatBRL(avgPedido)}`;
             document.getElementById('kpiMeta').innerText = formatBRL(currentMeta);
-            
+
             document.getElementById('kpiPorcentagem').innerText = `${percentualProgresso.toFixed(1)}%`;
-            
+
             const badge = document.getElementById('kpiProgresso');
             if (percentualProgresso >= 100) {
                 badge.innerText = "Meta Atingida!";
@@ -390,7 +404,7 @@
             // Prepare Chart Data
             const labels = Object.keys(productSales).sort();
             const dataValues = labels.map(p => productSales[p]);
-            
+
             // Calculate Individual Percentage
             const dataPercentages = dataValues.map(v => totalPedido > 0 ? ((v / totalPedido) * 100).toFixed(1) : 0);
 
@@ -399,7 +413,7 @@
 
         function renderChart(labels, values, percentages) {
             const ctx = document.getElementById('salesChart').getContext('2d');
-            
+
             if (chartInstance) {
                 chartInstance.destroy();
             }
@@ -439,7 +453,7 @@
                             padding: 12,
                             displayColors: false,
                             callbacks: {
-                                label: function(context) {
+                                label: function (context) {
                                     const rawValue = context.raw;
                                     const percent = percentages[context.dataIndex];
                                     return [
@@ -458,7 +472,7 @@
                                 drawBorder: false
                             },
                             ticks: {
-                                callback: function(value) {
+                                callback: function (value) {
                                     return 'R$ ' + (value / 1000) + 'k';
                                 }
                             }
@@ -483,12 +497,12 @@
             if (!file) return;
 
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 const data = new Uint8Array(e.target.result);
-                const workbook = XLSX.read(data, {type: 'array'});
+                const workbook = XLSX.read(data, { type: 'array' });
                 const firstSheet = workbook.SheetNames[0];
                 // header: 1 retorna os dados como um array de arrays (linhas e colunas por índice)
-                const jsonData = XLSX.utils.sheet_to_json(workbook.Sheets[firstSheet], {header: 1});
+                const jsonData = XLSX.utils.sheet_to_json(workbook.Sheets[firstSheet], { header: 1 });
                 callback(jsonData);
             };
             reader.readAsArrayBuffer(file);
@@ -497,17 +511,17 @@
 
         document.getElementById('uploadVendas').addEventListener('change', (e) => {
             const selectedRegion = document.getElementById('regiaoSelect').value;
-            
+
             handleFileUpload(e, (data) => {
                 if (data.length > 0) {
                     let newVendas = [];
                     data.forEach(row => {
                         // Ignora linhas vazias ou com menos de 2 colunas
                         if (!row || row.length < 2) return;
-                        
+
                         let col1 = String(row[0]).trim(); // Nome do Produto
                         let col2 = parseFloat(row[1]);    // Quantidade / Valor
-                        
+
                         // Ignora colunas que são cabeçalhos (onde parseFloat retorna NaN)
                         if (!isNaN(col2) && col1 !== "undefined" && col1 !== "") {
                             newVendas.push({
@@ -517,7 +531,7 @@
                             });
                         }
                     });
-                    
+
                     if (newVendas.length > 0) {
                         // Substitui os dados da região selecionada pelos novos dados carregados
                         if (selectedRegion !== "Todas") {
@@ -542,16 +556,16 @@
                     let updated = 0;
                     data.forEach(row => {
                         if (!row || row.length < 2) return;
-                        
+
                         let col1 = String(row[0]).trim(); // Região
                         let col2 = parseFloat(row[1]);    // Meta
-                        
+
                         if (!isNaN(col2) && col1 !== "undefined" && col1 !== "") {
                             goals[col1] = col2;
                             updated++;
                         }
                     });
-                    
+
                     if (updated > 0) {
                         updateDashboard();
                         alert("Metas regionais atualizadas com sucesso!");
@@ -567,4 +581,5 @@
         updateDashboard();
     </script>
 </body>
+
 </html>
